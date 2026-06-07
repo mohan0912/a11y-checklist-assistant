@@ -1,0 +1,4 @@
+interface:
+  display_name: "A11y Checklist Assistant"
+  short_description: "Local Playwright + axe evidence capture with Deque/WCAG checklist reports."
+  default_prompt: "Run the local accessibility checklist assistant for one or more web page scenarios, generate AI pre-assessments, developer gaps, N/A reasons, and a manual Pass/Fail/N/A verification pack."

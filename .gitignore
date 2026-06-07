@@ -1,0 +1,12 @@
+node_modules/
+a11y-reports/
+demo-reports/
+rename-smoke-reports/
+playwright-report/
+test-results/
+storage-state*.json
+*.log
+*.tmp
+.env
+.env.*
+.DS_Store

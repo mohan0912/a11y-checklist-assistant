@@ -1,0 +1,21 @@
+{
+  "name": "a11y-checklist-assistant",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local accessibility checklist assistant for Deque/WCAG evidence capture and human verification workflows.",
+  "bin": {
+    "a11y-checklist-assistant": "scripts/a11y-checklist-assistant.js"
+  },
+  "scripts": {
+    "a11y": "node scripts/a11y-checklist-assistant.js",
+    "collector": "node scripts/collect-accessibility-evidence.js",
+    "check": "node --check scripts/a11y-checklist-assistant.js && node --check scripts/collect-accessibility-evidence.js"
+  },
+  "dependencies": {
+    "axe-core": "latest",
+    "playwright": "latest"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

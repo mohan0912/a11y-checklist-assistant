@@ -1,0 +1,49 @@
+{
+  "target": {
+    "wcag": "2.2",
+    "level": "AA",
+    "includeBestPractice": false
+  },
+  "run": {
+    "headed": false,
+    "timeout": 45000,
+    "maxTabs": 160,
+    "viewport": "1280x720",
+    "manualCapture": false,
+    "captureScreenshots": true,
+    "captureHtml": false,
+    "focusScreenshots": false,
+    "captureIframes": true,
+    "captureShadowDom": true,
+    "captureReverseFocus": true,
+    "captureVisualModes": true,
+    "captureWidgetProbes": true,
+    "maxWidgetProbes": 40
+  },
+  "reports": {
+    "outputDir": "./a11y-reports",
+    "formats": ["json", "md", "html", "csv"]
+  },
+  "scenarios": [
+    {
+      "id": "manual-current-page",
+      "name": "Manual browser navigation capture",
+      "manualCapture": true,
+      "url": "http://localhost:3000",
+      "notes": "Tool opens the browser at the start URL; tester navigates manually and presses Enter in the terminal to capture."
+    },
+    {
+      "id": "login-empty-submit",
+      "name": "Login form empty submit validation",
+      "url": "http://localhost:3000/login",
+      "scenario": "./scenarios/example-login-empty-submit.js",
+      "notes": "Navigate to login, submit empty form, and capture validation state."
+    },
+    {
+      "id": "checkout-payment",
+      "name": "Checkout payment step",
+      "url": "http://localhost:3000/checkout/payment",
+      "storageState": "./auth/customer-storage-state.json"
+    }
+  ]
+}

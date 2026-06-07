@@ -1,0 +1,672 @@
+{
+  "metadata": {
+    "name": "Deque-style Web Accessibility Checklist Map",
+    "basis": "Paraphrased mapping of Deque University Web Accessibility Checklist topics and WCAG A/AA requirements for AI-assisted review.",
+    "sourceUrls": [
+      "https://dequeuniversity.com/checklists/web/",
+      "https://media.dequeuniversity.com/en/docs/web-accessibility-checklist-wcag-2.2.pdf"
+    ],
+    "defaultTarget": {
+      "wcagVersion": "2.2",
+      "level": "AA"
+    },
+    "supportedWcagVersions": ["2.0", "2.1", "2.2"],
+    "supportedLevels": ["A", "AA"],
+    "assessmentStates": [
+      "Evidence supports implementation",
+      "Evidence suggests gap",
+      "Needs manual verification",
+      "N/A candidate",
+      "Blocked or insufficient evidence"
+    ],
+    "humanFinalStates": ["Pass", "Fail", "N/A", "Not tested"]
+  },
+  "items": [
+    {
+      "id": "structure.page-title",
+      "topic": "Structure and Semantics / Page Title",
+      "requirement": "The page has a present, meaningful, accurate title that updates when the page purpose or state changes.",
+      "wcag": ["2.4.2"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "hybrid",
+      "evidenceSignals": ["metadata.title", "metadata.url", "dom.titleHistory", "scenarioActions"],
+      "manualSteps": [
+        "Open the captured page or scenario state.",
+        "Read the browser tab title and compare it with the page purpose.",
+        "If this is a single-page app, perform the state-changing action again and confirm the title changes when the purpose changes.",
+        "Confirm the title is concise and distinguishes this page from other pages in the same journey."
+      ],
+      "passCriteria": "Title exists, is accurate for the page/state, and changes when navigation or scripted context change creates a new page purpose.",
+      "naCriteria": "N/A only for non-HTML content where a page title concept does not apply."
+    },
+    {
+      "id": "structure.language",
+      "topic": "Structure and Semantics / Language",
+      "requirement": "The page language and any meaningful language changes are programmatically identified with valid language codes.",
+      "wcag": ["3.1.1", "3.1.2"],
+      "introduced": "2.0",
+      "level": "AA",
+      "testMode": "hybrid",
+      "evidenceSignals": ["metadata.documentLang", "inventory.languageParts"],
+      "manualSteps": [
+        "Confirm the main page language matches the `lang` value on the html element.",
+        "Find any visible text in a different human language.",
+        "Inspect those language changes and confirm they have a valid `lang` attribute on or above the changed text.",
+        "Use a screen reader spot check if pronunciation is important."
+      ],
+      "passCriteria": "Primary language is set accurately and meaningful inline language changes are marked.",
+      "naCriteria": "Language-of-parts is N/A when all meaningful content is in the same language."
+    },
+    {
+      "id": "structure.headings",
+      "topic": "Structure and Semantics / Headings",
+      "requirement": "Headings are real headings, meaningful, and form a useful page outline without using heading markup for non-headings.",
+      "wcag": ["1.3.1", "2.4.1", "2.4.6"],
+      "introduced": "2.0",
+      "level": "AA",
+      "testMode": "ai-assisted",
+      "evidenceSignals": ["inventory.headings", "accessibilityTree"],
+      "manualSteps": [
+        "Review the heading list from the evidence report.",
+        "Visually scan the page and identify text that appears to start sections.",
+        "Confirm visible section headings are represented as headings in the evidence.",
+        "Confirm heading text accurately describes the content that follows.",
+        "Confirm heading levels make sense for the page structure."
+      ],
+      "passCriteria": "Headings are semantic, meaningful, and useful for navigation; decorative or styling-only text is not marked as a heading.",
+      "naCriteria": "N/A only for a page state with no sectioned content where headings would not help navigation."
+    },
+    {
+      "id": "structure.landmarks",
+      "topic": "Structure and Semantics / Landmarks",
+      "requirement": "Landmarks identify major page regions, support bypassing repeated content, and duplicate landmark types are distinguishable where needed.",
+      "wcag": ["2.4.1"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "hybrid",
+      "evidenceSignals": ["inventory.landmarks", "accessibilityTree"],
+      "manualSteps": [
+        "Review the landmark list.",
+        "Confirm the page has an identifiable main content region.",
+        "Confirm navigation, search, banner, complementary, and contentinfo regions are present when visually applicable.",
+        "If multiple landmarks of the same role exist, confirm their accessible names distinguish them.",
+        "Use a screen reader landmark shortcut to confirm the regions are announced usefully."
+      ],
+      "passCriteria": "Major regions are discoverable and repeated blocks can be bypassed using landmarks, headings, or skip links.",
+      "naCriteria": "N/A only for a very small embedded page fragment where landmarks are not part of the delivered UI."
+    },
+    {
+      "id": "structure.lists",
+      "topic": "Structure and Semantics / Lists",
+      "requirement": "Content that is a list is represented with appropriate list semantics.",
+      "wcag": ["1.3.1"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "ai-assisted",
+      "evidenceSignals": ["inventory.lists", "inventory.visualListCandidates"],
+      "manualSteps": [
+        "Visually identify grouped items that function as ordered, unordered, or description lists.",
+        "Compare them with the list inventory.",
+        "Confirm list item counts and nesting are meaningful to screen reader users.",
+        "Confirm non-list content is not forced into list semantics."
+      ],
+      "passCriteria": "Real lists use list semantics and list structure matches visual grouping.",
+      "naCriteria": "N/A when the page state has no list-like content."
+    },
+    {
+      "id": "structure.tables",
+      "topic": "Structure and Semantics / Tables",
+      "requirement": "Data tables expose headers, associations, and names/captions as needed; layout tables do not expose misleading headers.",
+      "wcag": ["1.3.1"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "hybrid",
+      "evidenceSignals": ["inventory.tables"],
+      "manualSteps": [
+        "Identify every data table in the page state.",
+        "Confirm column and row headers are marked as headers.",
+        "For complex tables, confirm each data cell is associated with the correct headers.",
+        "Confirm table captions or names describe the purpose when needed.",
+        "Confirm purely layout tables do not contain data-table headers."
+      ],
+      "passCriteria": "Screen reader users can determine the same table relationships visible users can determine.",
+      "naCriteria": "N/A when no data or layout tables exist in the page state."
+    },
+    {
+      "id": "structure.iframes",
+      "topic": "Structure and Semantics / Iframes",
+      "requirement": "Frames and iframes have accurate titles, and embedded documents have meaningful titles when user-facing.",
+      "wcag": ["2.4.1", "2.4.2"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "hybrid",
+      "evidenceSignals": ["inventory.iframes"],
+      "manualSteps": [
+        "Review each iframe or frame in the evidence.",
+        "Confirm the parent-page frame title describes the embedded content or purpose.",
+        "Open or inspect user-facing embedded content and confirm its document title is meaningful.",
+        "Confirm hidden/empty frames are hidden from assistive technologies when they convey no user content."
+      ],
+      "passCriteria": "Each user-facing frame is named accurately and hidden frames do not create noise.",
+      "naCriteria": "N/A when the page state has no iframe or frame elements."
+    },
+    {
+      "id": "structure.markup-validity",
+      "topic": "Structure and Semantics / Markup Validity",
+      "requirement": "For WCAG 2.2, the former Parsing success criterion is obsolete; still review severe invalid markup when it breaks names, roles, states, focus, labels, or relationships.",
+      "wcag": ["4.1.1", "4.1.2"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "hybrid",
+      "evidenceSignals": ["axe.violations", "page.html", "accessibilityTree"],
+      "manualSteps": [
+        "Confirm the requested WCAG version.",
+        "For WCAG 2.2, do not fail the page solely for generic HTML parsing issues.",
+        "Review invalid or unusual markup only when it causes an accessibility failure, such as broken labels, duplicate IDs affecting ARIA references, invalid roles, missing names, or incorrect states.",
+        "If testing WCAG 2.0 or 2.1 in an organizational policy, document how the project treats the obsolete Parsing criterion."
+      ],
+      "passCriteria": "No markup issue creates an accessibility failure in names, roles, values, relationships, or operation.",
+      "naCriteria": "N/A only when the audit scope explicitly excludes markup validity and no related accessibility behavior is affected."
+    },
+    {
+      "id": "structure.other-semantic-elements",
+      "topic": "Structure and Semantics / Other Semantic Elements",
+      "requirement": "Semantic elements such as emphasis, highlights, quotes, inserted text, and deleted text communicate meaning without relying only on visual styling.",
+      "wcag": ["1.3.1"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "manual",
+      "evidenceSignals": ["inventory.semanticText", "page.html"],
+      "manualSteps": [
+        "Find text where emphasis, highlighting, quotations, inserted text, or deleted text changes meaning.",
+        "Confirm the meaning is available in text or semantic markup, not only color, bold, italics, indentation, or strikethrough styling.",
+        "Use a screen reader spot check for any critical semantic text."
+      ],
+      "passCriteria": "Meaning conveyed by text styling is also conveyed semantically or textually.",
+      "naCriteria": "N/A when no emphasized, highlighted, quoted, inserted, or deleted text carries meaning."
+    },
+    {
+      "id": "links.semantic-purpose",
+      "topic": "Links and Navigation / Links",
+      "requirement": "Links use appropriate link semantics, have discernible names, and their purpose is understandable from text or immediate context.",
+      "wcag": ["2.4.4", "4.1.2"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "hybrid",
+      "evidenceSignals": ["inventory.links", "axe.violations"],
+      "manualSteps": [
+        "Review all links with empty, duplicate, vague, or suspicious names.",
+        "Confirm each link purpose is understandable from its name or immediate context.",
+        "Confirm links are used for navigation and buttons are used for in-page actions where practical.",
+        "Confirm file, external-site, or new-window behavior is announced or visually indicated when needed."
+      ],
+      "passCriteria": "Each link has a meaningful accessible name and users can predict its destination or purpose.",
+      "naCriteria": "N/A when there are no links in the page state."
+    },
+    {
+      "id": "links.keyboard-focus",
+      "topic": "Links and Navigation / Link Keyboard Access",
+      "requirement": "Links are keyboard focusable, activate with Enter, appear in logical order, and show visible focus.",
+      "wcag": ["2.1.1", "2.4.3", "2.4.7"],
+      "introduced": "2.0",
+      "level": "AA",
+      "testMode": "hybrid",
+      "evidenceSignals": ["focusOrder", "inventory.links"],
+      "manualSteps": [
+        "Use Tab and Shift+Tab to reach every visible link.",
+        "Confirm focus order follows the visual and task order.",
+        "Confirm the focus indicator is visible on each link.",
+        "Press Enter on representative links and confirm activation works.",
+        "Confirm positive tabindex is not creating a custom tab order."
+      ],
+      "passCriteria": "Links are reachable, visible when focused, logically ordered, and keyboard-operable.",
+      "naCriteria": "N/A when the page state has no links."
+    },
+    {
+      "id": "links.visual-distinction",
+      "topic": "Links and Navigation / Link Visual Design",
+      "requirement": "Links are visually distinguishable from surrounding text, meet contrast expectations, and provide hover/focus indications.",
+      "wcag": ["1.4.1", "1.4.3", "1.4.11"],
+      "introduced": "2.1",
+      "level": "AA",
+      "testMode": "hybrid",
+      "evidenceSignals": ["axe.violations", "screenshots", "inventory.links"],
+      "manualSteps": [
+        "Inspect links embedded in body text.",
+        "Confirm color is not the only visual cue unless contrast and focus/hover cues satisfy the requirement.",
+        "Check representative links with hover and keyboard focus.",
+        "Review automated contrast findings for text and focus indicators."
+      ],
+      "passCriteria": "Sighted users can identify links and perceive focus/hover state without relying on color alone.",
+      "naCriteria": "N/A when there are no visible links or all links are controls/buttons with clear visual affordance."
+    },
+    {
+      "id": "navigation.site-navigation",
+      "topic": "Links and Navigation / Site Navigation",
+      "requirement": "Repeated navigation, repeated help, and repeated functionality are consistently ordered and identified; users have multiple ways to locate pages when applicable.",
+      "wcag": ["2.4.5", "3.2.3", "3.2.4", "3.2.6"],
+      "introduced": "2.2",
+      "level": "AA",
+      "testMode": "manual",
+      "evidenceSignals": ["inventory.landmarks", "inventory.links"],
+      "manualSteps": [
+        "Compare this page with at least one other page from the same flow or site section.",
+        "Confirm repeated navigation appears in the same relative order.",
+        "Confirm repeated controls or labels with the same function use consistent names.",
+        "Confirm repeated help mechanisms appear in a consistent relative order.",
+        "For sites with multiple pages, confirm at least two ways exist to find pages, such as navigation, search, sitemap, table of contents, or related links."
+      ],
+      "passCriteria": "Repeated navigation/help/functionality stays consistent and users can find pages in more than one way when required.",
+      "naCriteria": "N/A for a single-page isolated app or embedded widget with no repeated navigation or multipage site context."
+    },
+    {
+      "id": "navigation.within-page",
+      "topic": "Links and Navigation / Within-Page Navigation",
+      "requirement": "Users can bypass repeated blocks and navigate within the page using skip links, headings, landmarks, table of contents, or equivalent methods.",
+      "wcag": ["2.4.1", "1.3.2", "2.4.3", "2.1.4"],
+      "introduced": "2.1",
+      "level": "A",
+      "testMode": "hybrid",
+      "evidenceSignals": ["inventory.skipLinks", "inventory.headings", "inventory.landmarks", "focusOrder"],
+      "manualSteps": [
+        "Press Tab from the top of the page and check whether a skip link appears when appropriate.",
+        "Activate the skip link and confirm focus moves to the intended target.",
+        "Use headings and landmarks to bypass repeated content with a screen reader.",
+        "If a table of contents or pagination exists, confirm current position is visible and programmatically available.",
+        "If single-key shortcuts exist, confirm they can be disabled, remapped, or limited to focused components."
+      ],
+      "passCriteria": "Repeated content can be bypassed and within-page navigation is logical and discoverable.",
+      "naCriteria": "N/A only when there are no repeated blocks or long sections where bypass methods would be useful."
+    },
+    {
+      "id": "navigation.reading-focus-order",
+      "topic": "Links and Navigation / Reading and Focus Order",
+      "requirement": "Reading order and keyboard focus order are logical, intuitive, and do not rely on positive tabindex.",
+      "wcag": ["1.3.2", "2.4.3"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "hybrid",
+      "evidenceSignals": ["focusOrder", "inventory.positiveTabindex", "screenshots"],
+      "manualSteps": [
+        "Read through the visible page from top to bottom and left to right according to the language/layout.",
+        "Compare the visual order with the DOM and accessibility order evidence.",
+        "Press Tab through every focusable element and confirm focus follows a logical task order.",
+        "Press Shift+Tab through part of the page and confirm reverse order is logical.",
+        "Confirm no visible interactive control is skipped and no hidden control receives unexpected focus.",
+        "Review any positive tabindex values and confirm they are removed or justified."
+      ],
+      "passCriteria": "Reading and focus order match the intended content/task sequence and remain understandable for keyboard and screen reader users.",
+      "naCriteria": "N/A is rarely valid; only for static non-interactive fragments where reading order is trivially linear."
+    },
+    {
+      "id": "images.alternative-text",
+      "topic": "Images and Visual Design / Images",
+      "requirement": "Informative, active, complex, background, SVG, canvas, and icon images expose appropriate alternatives; decorative images are ignored.",
+      "wcag": ["1.1.1"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "hybrid",
+      "evidenceSignals": ["inventory.images", "inventory.backgroundImages", "axe.violations"],
+      "manualSteps": [
+        "Review every image or image-like element from the evidence.",
+        "For informative images, confirm alternative text conveys purpose and author intent.",
+        "For linked or button images, confirm the name describes the destination or action.",
+        "For complex images, confirm a short alternative plus an extended description exists.",
+        "For decorative images, confirm they are hidden or have empty alternatives.",
+        "For informative background images, confirm equivalent visible or programmatic text exists."
+      ],
+      "passCriteria": "Image alternatives match each image's purpose and decorative images do not add noise.",
+      "naCriteria": "N/A when the page state contains no images, SVGs, canvas, icon fonts, or informative CSS background images."
+    },
+    {
+      "id": "images.images-of-text",
+      "topic": "Images and Visual Design / Images of Text",
+      "requirement": "Informative text is not presented as an image when real text can provide the same visual result; image text still meets contrast when used.",
+      "wcag": ["1.4.5", "1.4.3"],
+      "introduced": "2.0",
+      "level": "AA",
+      "testMode": "manual",
+      "evidenceSignals": ["inventory.images", "screenshots"],
+      "manualSteps": [
+        "Inspect images and background images for text content.",
+        "Confirm text-in-image is essential, such as a logo, or customizable if needed.",
+        "Confirm equivalent real text is provided when the image text conveys information.",
+        "Check contrast for any necessary image text."
+      ],
+      "passCriteria": "Informative text is real text unless an exception applies, and necessary image text is perceivable.",
+      "naCriteria": "N/A when no images or backgrounds contain informative text."
+    },
+    {
+      "id": "visual.color-contrast",
+      "topic": "Images and Visual Design / Color and Contrast",
+      "requirement": "Text, images of text, UI component boundaries, graphical objects, and focus indicators meet required contrast; color is not the only way meaning is conveyed.",
+      "wcag": ["1.4.1", "1.4.3", "1.4.11"],
+      "introduced": "2.1",
+      "level": "AA",
+      "testMode": "hybrid",
+      "evidenceSignals": ["axe.violations", "screenshots", "focusOrder"],
+      "manualSteps": [
+        "Review automated contrast violations.",
+        "Inspect information conveyed by color, such as status, charts, errors, or required fields.",
+        "Confirm each color-coded meaning has text, icon shape, pattern, or programmatic alternative.",
+        "Inspect UI boundaries and focus indicators against adjacent colors.",
+        "Use a contrast analyzer for samples axe cannot measure, such as gradients, images, disabled states, and canvas."
+      ],
+      "passCriteria": "Required contrast ratios are met and meaning is not communicated by color alone.",
+      "naCriteria": "N/A only for subchecks that have no corresponding content, such as no UI component boundaries or no color-coded information."
+    },
+    {
+      "id": "visual.text-resize-reflow-zoom",
+      "topic": "Images and Visual Design / Text Styles, Resize, Reflow, and Zoom",
+      "requirement": "Content remains usable at text resize/zoom and small viewport widths, without two-direction scrolling unless essential.",
+      "wcag": ["1.4.4", "1.4.10", "1.4.12"],
+      "introduced": "2.1",
+      "level": "AA",
+      "testMode": "hybrid",
+      "evidenceSignals": ["metadata.viewportMeta", "responsiveScreenshots", "inventory.overflow"],
+      "manualSteps": [
+        "Set browser zoom or text zoom to 200 percent and inspect the page.",
+        "At 320 CSS pixels wide for vertical content, confirm only one scroll direction is needed unless two directions are essential.",
+        "Apply text spacing settings: line height 1.5, paragraph spacing 2, letter spacing 0.12em, word spacing 0.16em.",
+        "Confirm no content or functionality is lost, clipped, overlapped, or hidden.",
+        "On mobile, confirm pinch zoom is not disabled."
+      ],
+      "passCriteria": "Users can read and operate the page with zoom, text spacing, and narrow viewport conditions.",
+      "naCriteria": "N/A only for specific subchecks where the content type is absent, such as no text content for text spacing."
+    },
+    {
+      "id": "visual.visual-cues",
+      "topic": "Images and Visual Design / Visual Cues",
+      "requirement": "Meaning is not conveyed only through visual characteristics such as shape, size, location, orientation, or proximity.",
+      "wcag": ["1.3.3"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "manual",
+      "evidenceSignals": ["screenshots", "inventory.forms", "inventory.controls"],
+      "manualSteps": [
+        "Look for instructions such as 'click the green button', 'fields on the right', or 'items marked with a star'.",
+        "Confirm the same meaning is available in text or programmatically.",
+        "Check labels are visually close to related controls.",
+        "Confirm layout and visual emphasis do not create ambiguity about the primary task."
+      ],
+      "passCriteria": "Users can understand instructions and relationships without relying only on sensory or visual cues.",
+      "naCriteria": "N/A when no instructions or relationships depend on visual characteristics."
+    },
+    {
+      "id": "responsive.adaptive-output",
+      "topic": "Images and Visual Design / Adaptive and Responsive Output",
+      "requirement": "Content works in portrait and landscape, adapts to small viewports, and preserves essential information when simplified.",
+      "wcag": ["1.3.4", "1.4.10"],
+      "introduced": "2.1",
+      "level": "AA",
+      "testMode": "hybrid",
+      "evidenceSignals": ["responsiveScreenshots", "metadata.viewportMeta"],
+      "manualSteps": [
+        "Test the page in portrait and landscape orientations or equivalent viewport sizes.",
+        "Confirm the UI does not force one orientation unless essential.",
+        "Review the narrow viewport screenshot and live page for clipping, overlap, or hidden controls.",
+        "Confirm simplification on small screens does not remove essential content or functionality."
+      ],
+      "passCriteria": "Page content and controls adapt without losing meaning or operation.",
+      "naCriteria": "N/A only when orientation or responsive behavior is not applicable to the delivery context."
+    },
+    {
+      "id": "media.audio-video",
+      "topic": "Multimedia, Animations, and Motion / Audio and Video",
+      "requirement": "Audio/video media have required transcripts, captions, audio descriptions, audio controls, autoplay controls, and accessible media-player controls.",
+      "wcag": ["1.2.1", "1.2.2", "1.2.4", "1.2.5", "1.4.2", "2.2.2", "2.3.1"],
+      "introduced": "2.0",
+      "level": "AA",
+      "testMode": "manual",
+      "evidenceSignals": ["inventory.media", "screenshots"],
+      "manualSteps": [
+        "Identify all prerecorded and live audio/video content in the page state.",
+        "For audio-only, confirm a transcript exists.",
+        "For prerecorded video/multimedia, confirm captions and audio description are available where required.",
+        "For live multimedia, confirm synchronized captions are available.",
+        "If media autoplays, confirm users can pause, stop, hide, mute, or control volume as required.",
+        "Operate media-player controls with keyboard and screen reader."
+      ],
+      "passCriteria": "Media alternatives and controls make the content usable for deaf, hard-of-hearing, blind, low-vision, keyboard, and screen reader users.",
+      "naCriteria": "N/A when no audio, video, video-like animation, media player, or background media exists in the page state."
+    },
+    {
+      "id": "motion.animation-timed-content",
+      "topic": "Multimedia, Animations, and Motion / Animation, Motion, and Timed Content",
+      "requirement": "Flashing, parallax, animation, autoplay, and time limits are controlled and do not block keyboard or assistive technology use.",
+      "wcag": ["2.3.1", "2.2.1", "2.2.2", "2.1.1", "1.4.3", "1.4.11"],
+      "introduced": "2.1",
+      "level": "AA",
+      "testMode": "manual",
+      "evidenceSignals": ["inventory.motionCandidates", "inventory.media", "screenshots"],
+      "manualSteps": [
+        "Observe the page for flashing, auto-updating, parallax, moving backgrounds, animation, or timed sessions.",
+        "Confirm content does not flash more than allowed thresholds.",
+        "Confirm moving/parallax content and controls are keyboard accessible.",
+        "Confirm text and UI contrast remains sufficient over moving backgrounds.",
+        "Confirm users can pause, stop, hide, extend, or adjust timed content when required.",
+        "Confirm timed content can be replayed when replay is needed and does not alter meaning."
+      ],
+      "passCriteria": "Motion and timing do not create seizure risk, loss of access, or unexpected time pressure.",
+      "naCriteria": "N/A when no flashing, animation, motion, autoplaying content, or time limits exist."
+    },
+    {
+      "id": "input.keyboard",
+      "topic": "User Input, Forms, and Dynamic Content / Device-Independent User Input",
+      "requirement": "All functionality is available from keyboard, focus is visible, focus is not trapped, shortcuts do not conflict, and custom keystrokes have instructions.",
+      "wcag": ["2.1.1", "2.1.2", "2.1.4", "2.4.3", "2.4.7", "2.4.11", "3.3.2", "1.4.11"],
+      "introduced": "2.2",
+      "level": "AA",
+      "testMode": "hybrid",
+      "evidenceSignals": ["focusOrder", "inventory.controls", "inventory.positiveTabindex"],
+      "manualSteps": [
+        "Use only the keyboard to reach and operate every visible control.",
+        "Confirm Tab and Shift+Tab movement is logical.",
+        "Confirm every focused element has a visible focus indicator and is not fully obscured.",
+        "Confirm Enter, Space, Escape, and arrow keys work according to control type.",
+        "Confirm keyboard focus can enter and leave widgets unless a modal focus trap is intentionally active.",
+        "Confirm page-defined single-key shortcuts can be disabled, remapped, or are active only in focused controls.",
+        "Confirm custom keyboard interactions have visible and programmatic instructions."
+      ],
+      "passCriteria": "All page functionality is operable by keyboard without trap, loss of focus, missing focus indicator, or unexplained custom keys.",
+      "naCriteria": "N/A only for non-interactive static content; individual shortcut subchecks are N/A when no shortcuts exist."
+    },
+    {
+      "id": "input.focus-management",
+      "topic": "User Input, Forms, and Dynamic Content / Focus Management During Interactions",
+      "requirement": "When actions change context, focus moves intentionally to useful text and is not lost or reset unexpectedly.",
+      "wcag": ["2.4.3", "1.3.1", "3.2.1", "3.2.2"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "manual",
+      "evidenceSignals": ["focusOrder", "dialogs", "liveRegions", "scenarioActions"],
+      "manualSteps": [
+        "Trigger each interaction that opens a dialog, menu, panel, route, error summary, toast, or dynamic result.",
+        "Observe where keyboard focus moves.",
+        "Confirm focus moves to the most useful next element when context changes.",
+        "Confirm focus never disappears, returns to the top unexpectedly, or lands on an unnamed element.",
+        "Close transient UI and confirm focus returns to a logical invoking element."
+      ],
+      "passCriteria": "Focus movement supports the user's task and screen reader users receive the context change.",
+      "naCriteria": "N/A when the page state has no interactions that change context or content."
+    },
+    {
+      "id": "input.pointer-touch-voice",
+      "topic": "User Input, Forms, and Dynamic Content / Pointer, Touch, and Voice",
+      "requirement": "Pointer and touch functionality has accessible target size, cancellation, alternatives for drag/path gestures, and label-in-name support for voice control.",
+      "wcag": ["2.5.1", "2.5.2", "2.5.3", "2.5.4", "2.5.7", "2.5.8"],
+      "introduced": "2.2",
+      "level": "AA",
+      "testMode": "hybrid",
+      "evidenceSignals": ["inventory.targetSize", "inventory.draggable", "inventory.controls"],
+      "manualSteps": [
+        "Review target-size candidates under 24 by 24 CSS pixels.",
+        "Confirm small targets meet an allowed exception or have an equivalent larger target.",
+        "Test pointer interactions and confirm activation is not only on down-event unless essential.",
+        "For drag, swipe, multipoint, or path gestures, confirm a single-pointer non-gesture alternative exists unless essential.",
+        "For motion-actuated features, confirm UI alternatives exist and motion activation can be disabled.",
+        "Use voice-control reasoning: confirm visible label text is included in the programmatic name."
+      ],
+      "passCriteria": "Users can operate controls with pointer, touch, and voice without precision-only, gesture-only, or mismatched-label barriers.",
+      "naCriteria": "N/A for subchecks where no pointer-specific custom target, drag gesture, touch gesture, voice-labeled control, or motion actuation exists."
+    },
+    {
+      "id": "forms.input-labels",
+      "topic": "User Input, Forms, and Dynamic Content / Form Inputs, Labels, and Instructions",
+      "requirement": "Inputs and input groups have visible, meaningful, programmatic labels that do not rely only on placeholder text or sensory references.",
+      "wcag": ["1.3.1", "1.3.3", "2.5.3", "3.3.2"],
+      "introduced": "2.1",
+      "level": "AA",
+      "testMode": "hybrid",
+      "evidenceSignals": ["inventory.forms", "axe.violations"],
+      "manualSteps": [
+        "Review each input, select, textarea, checkbox, radio, switch, slider, and combobox.",
+        "Confirm each has a visible label unless a self-evident icon is used with a programmatic name.",
+        "Confirm each label is programmatically associated and available as text.",
+        "Confirm placeholder text is not the only label.",
+        "Confirm visible label text is included in the accessible name.",
+        "For grouped inputs, confirm group labels are visible, meaningful, and programmatically associated."
+      ],
+      "passCriteria": "Every form control and group can be understood visually, by screen reader, and by voice-control users.",
+      "naCriteria": "N/A when no form inputs or form-like custom controls exist."
+    },
+    {
+      "id": "forms.input-purpose-instructions",
+      "topic": "User Input, Forms, and Dynamic Content / Input Purpose and Instructions",
+      "requirement": "Common personal-data input purposes, field instructions, restrictions, required state, and disabled-field meaning are communicated visibly and programmatically.",
+      "wcag": ["1.3.5", "3.3.2", "1.3.3", "1.3.1"],
+      "introduced": "2.1",
+      "level": "AA",
+      "testMode": "hybrid",
+      "evidenceSignals": ["inventory.forms", "inventory.liveRegions"],
+      "manualSteps": [
+        "For personal-data fields, confirm appropriate autocomplete/input purpose is used where applicable.",
+        "Confirm input instructions and format restrictions are visible, meaningful, and programmatically associated.",
+        "Confirm required fields are indicated visually and, where possible, programmatically.",
+        "Confirm disabled fields that are essential to understanding are explained outside the disabled control.",
+        "Confirm instructions do not rely only on shape, color, position, or other sensory cues."
+      ],
+      "passCriteria": "Users know what to enter, which fields are required, and any restrictions before or during input.",
+      "naCriteria": "N/A when no fields collect data or require instructions/restrictions; autocomplete is N/A when no covered personal-data fields exist."
+    },
+    {
+      "id": "forms.timing-redundant-authentication",
+      "topic": "User Input, Forms, and Dynamic Content / Time Limits, Redundant Entry, and Authentication",
+      "requirement": "Forms provide sufficient time, avoid unnecessary repeated entry, and do not require unsupported cognitive-function tests for authentication.",
+      "wcag": ["2.2.1", "3.3.7", "3.3.8"],
+      "introduced": "2.2",
+      "level": "AA",
+      "testMode": "manual",
+      "evidenceSignals": ["inventory.forms", "scenarioActions", "metadata.url"],
+      "manualSteps": [
+        "Confirm whether the form or session has a time limit.",
+        "If timed, confirm users can turn off, adjust, extend, or otherwise receive sufficient time unless timing is essential.",
+        "Walk through the process and identify information the user must enter more than once.",
+        "Confirm repeated information is auto-populated or selectable unless an allowed exception applies.",
+        "For authentication, confirm users can use password managers, paste, or alternative methods and are not forced to solve an unsupported cognitive test."
+      ],
+      "passCriteria": "Time pressure, repeated entry, and authentication do not create avoidable barriers.",
+      "naCriteria": "N/A when there is no form process, no time limit, no repeated-entry process, or no authentication step, respectively."
+    },
+    {
+      "id": "forms.validation-feedback",
+      "topic": "User Input, Forms, and Dynamic Content / Form Validation and Feedback",
+      "requirement": "Errors are identified, described, suggested, visible, and programmatically associated; critical submissions provide prevention or confirmation.",
+      "wcag": ["3.3.1", "3.3.3", "3.3.4"],
+      "introduced": "2.0",
+      "level": "AA",
+      "testMode": "hybrid",
+      "evidenceSignals": ["inventory.forms", "inventory.liveRegions", "scenarioActions", "axe.violations"],
+      "manualSteps": [
+        "Submit invalid or incomplete data for each form state.",
+        "Confirm the page identifies each field in error and describes the error in text.",
+        "Confirm error text is visible and programmatically associated with the field or summary.",
+        "Confirm known suggestions are provided unless they would harm security or purpose.",
+        "Confirm focus moves to a useful error summary or remains in a logical place.",
+        "For legal, financial, user-data, or test submissions, confirm reversible, checked, or confirmed submission is available.",
+        "Confirm success messages are perceivable when submission succeeds."
+      ],
+      "passCriteria": "Users can find, understand, and correct errors and avoid serious accidental submissions.",
+      "naCriteria": "N/A when no forms or user-submitted input exist; critical error prevention is N/A when submissions are not legal, financial, user-data, or test responses."
+    },
+    {
+      "id": "dynamic.content-changes",
+      "topic": "User Input, Forms, and Dynamic Content / Dynamic Content",
+      "requirement": "Dynamic changes do not surprise users, and important added content is communicated visually and to assistive technologies.",
+      "wcag": ["3.2.1", "3.2.2", "1.3.2", "2.4.3", "2.2.1"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "manual",
+      "evidenceSignals": ["inventory.liveRegions", "dialogs", "scenarioActions"],
+      "manualSteps": [
+        "Trigger every dynamic update: expand/collapse, filter, sort, load more, route change, modal, toast, validation, or search result.",
+        "Confirm changing focus alone does not trigger unexpected context changes.",
+        "Confirm input or selection changes do not unexpectedly navigate, open windows, or move focus unless users were informed first.",
+        "Confirm important added content is announced or focus is moved appropriately.",
+        "If a session timeout exists, confirm users are warned and can save or extend time."
+      ],
+      "passCriteria": "Dynamic updates are predictable and perceivable to keyboard and screen reader users.",
+      "naCriteria": "N/A when no JavaScript-driven content changes, popups, live updates, or timeouts exist."
+    },
+    {
+      "id": "widgets.name-role-value",
+      "topic": "User Input, Forms, and Dynamic Content / Custom Widgets",
+      "requirement": "Custom widgets expose correct name, role, value, state, and changes to assistive technologies.",
+      "wcag": ["4.1.2", "4.1.3", "1.3.1"],
+      "introduced": "2.1",
+      "level": "AA",
+      "testMode": "hybrid",
+      "evidenceSignals": ["inventory.ariaWidgets", "accessibilityTree", "axe.violations"],
+      "manualSteps": [
+        "Identify custom controls and ARIA widgets from the evidence.",
+        "Confirm each interactive widget has an accessible name.",
+        "Confirm each widget exposes the correct native element or ARIA role.",
+        "Confirm value and initial state are exposed programmatically.",
+        "Interact with the widget and confirm state changes are reflected visually and to assistive technologies.",
+        "Confirm non-ARIA state changes are communicated with live regions, focus movement, or equivalent methods."
+      ],
+      "passCriteria": "Screen reader users can identify and operate the widget with accurate name, role, value, and state updates.",
+      "naCriteria": "N/A when no custom widgets or ARIA-enhanced controls exist."
+    },
+    {
+      "id": "widgets.keyboard-patterns",
+      "topic": "User Input, Forms, and Dynamic Content / Custom Widget Keyboard Patterns",
+      "requirement": "Custom widgets follow expected keyboard conventions and provide instructions for non-standard interaction models.",
+      "wcag": ["2.1.1", "2.1.2", "2.4.3", "3.3.2"],
+      "introduced": "2.0",
+      "level": "A",
+      "testMode": "manual",
+      "evidenceSignals": ["inventory.ariaWidgets", "focusOrder"],
+      "manualSteps": [
+        "Identify widget type, such as accordion, dialog, combobox, menu, tabs, slider, tree, grid, tooltip, toolbar, or carousel.",
+        "Compare keyboard behavior with the corresponding WAI-ARIA Authoring Practices pattern.",
+        "Confirm Tab moves into/out of the widget correctly and arrow keys work where expected.",
+        "Confirm Escape, Enter, and Space behavior is appropriate for the widget type.",
+        "Confirm instructions are provided when interaction is not obvious."
+      ],
+      "passCriteria": "Custom widget keyboard behavior matches user expectations and does not trap or confuse users.",
+      "naCriteria": "N/A when no custom widget patterns exist and native controls provide built-in behavior."
+    },
+    {
+      "id": "captcha",
+      "topic": "User Input, Forms, and Dynamic Content / CAPTCHA",
+      "requirement": "CAPTCHA is avoided where possible; when present it has purpose text, alternatives across sensory modalities, keyboard access, dynamic-content support, widget accessibility, and contrast.",
+      "wcag": ["1.1.1", "2.1.1", "1.4.3", "1.4.11"],
+      "introduced": "2.0",
+      "level": "AA",
+      "testMode": "manual",
+      "evidenceSignals": ["inventory.captchaCandidates", "inventory.images", "inventory.forms"],
+      "manualSteps": [
+        "Confirm whether a CAPTCHA or human verification challenge is present.",
+        "If present, confirm non-text CAPTCHA has text that explains its purpose.",
+        "Confirm an alternative sensory modality is available when needed.",
+        "Confirm at least one text-based option exists or an accessible alternative process is available for deafblind users.",
+        "Operate CAPTCHA controls with keyboard only.",
+        "Apply dynamic content, custom widget, and color contrast checks to CAPTCHA UI."
+      ],
+      "passCriteria": "The challenge does not block users with sensory, cognitive, keyboard, or assistive technology needs.",
+      "naCriteria": "N/A when no CAPTCHA or human verification challenge is present in the page state."
+    }
+  ]
+}
